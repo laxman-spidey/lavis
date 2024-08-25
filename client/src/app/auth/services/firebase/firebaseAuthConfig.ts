@@ -3,7 +3,7 @@ type FirebaseAuthConfig = {
 };
 
 const firebaseConfig: FirebaseAuthConfig = {
-	apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+	apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'mock_key',
 	authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
 	databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
 	projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
