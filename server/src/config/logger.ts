@@ -47,5 +47,6 @@ class AppLogger {
 
 
 }
-export default new AppLogger().logger;
+export const logger = new AppLogger().logger;
+// export default new AppLogger().logger;
 

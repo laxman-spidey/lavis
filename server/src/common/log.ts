@@ -1,4 +1,4 @@
-import logger from '../config/logger';
+import {logger} from '../config/logger';
 
 class Log {
     debug(message: string, data: any = null) {

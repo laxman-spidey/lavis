@@ -41,7 +41,7 @@ export default class App {
   private config = () => {
     this.app.use(cors());
     this.bodyParserConfig();
-    this.initializeRoutes();
+    // this.initializeRoutes();
     //var publicDir = path.join(__dirname, 'public')
     const staticfiles = express.static('public');
     this.app.use(staticfiles as RequestHandler);
