@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 
-const {google} = require('googleapis');
 import { URL } from 'url';
 import config from '@app/config';
 import moment from 'moment';

@@ -1,7 +1,7 @@
 const db = 'lavis';
 const IP = 'localhost'
-const dbUser = 'laxmanspidey';
-const dbPass = 'viviancandy';
+const dbUser = 'root';
+const dbPass = 'root';
 
 
 const config: any = {
