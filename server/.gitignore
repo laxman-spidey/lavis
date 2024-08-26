@@ -1,0 +1,7 @@
+# ./dbdump
+node_modules
+/build
+/public
+/logs/*
+/dist
+/logs
