@@ -1,0 +1,651 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "GHMC API",
+        "description": "test api"
+    },
+    "definitions": {
+        "user": {
+            "type": "object",
+            "properties": {
+                "mobileno": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "paths": {
+        "/auth/login": {
+            "post": {
+                "summary": "Login with user credentials",
+                "operationId": "Login user",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "mobileno": {
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/getAllDepartments": {
+            "get": {
+                "tags": [
+                    "Get Departments"
+                ],
+                "summary": "List of Departments",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/worker/getAllDesignations": {
+            "get": {
+                "tags": [
+                    "Get Departments and zone and circle"
+                ],
+                "summary": "List of DepartmentsZonesCircles",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/getAllZones": {
+            "get": {
+                "tags": [
+                    "Get Zones"
+                ],
+                "summary": "List of Zones",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/getAllCircles": {
+            "get": {
+                "tags": [
+                    "Get Circles"
+                ],
+                "summary": "List of Circles",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/addCircle": {
+            "post": {
+                "summary": "Add Circle",
+                "operationId": "Add Circle",
+                "tags": [
+                    "Circle Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "org_id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/editCircle": {
+            "post": {
+                "summary": "Edit Circle",
+                "operationId": "Edit Circle",
+                "tags": [
+                    "Circle Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                 
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    }, 
+                                      "id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/getGroupByDepId": {
+            "post": {
+                "summary": "Get groups by department",
+                "tags": [
+                    "Groups Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                      "department_id": {
+                                        "type": "number"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+
+    "/master/addZone": {
+        "post": {
+            "summary": "Add Zone",
+            "operationId": "Add Zone",
+            "tags": [
+                "Zone Operations"
+            ],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "org_id": {
+                                    "type": "number"
+                                }
+                              
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "successful operation"
+                },
+                "400": {
+                    "description": "Invalid status value"
+                }
+            }
+        }
+    },
+    "/master/editZone": {
+        "post": {
+            "summary": "Edit Zone",
+            "operationId": "Edit Zone",
+            "tags": [
+                "Zone Operations"
+            ],
+            "requestBody": {
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                             
+                                "name": {
+                                    "type": "string"
+                                }, 
+                                  "id": {
+                                    "type": "number"
+                                }
+                              
+                            }
+                        }
+                    }
+                }
+            },
+            "responses": {
+                "200": {
+                    "description": "successful operation"
+                },
+                "400": {
+                    "description": "Invalid status value"
+                }
+            }
+        }
+    },
+        "/master/getAllDesignations": {
+            "get": {
+                "tags": [
+                    "Get Designation"
+                ],
+                "summary": "List of Designations",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+
+        "/worker/getAllWorkers": {
+            "get": {
+                "tags": [
+                    "Get Workers"
+                ],
+                "summary": "Get Workers",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/worker/insert-worker": {
+            "post": {
+                "tags": [
+                    "Insert Worker"
+                ],
+                "summary": "Insert Worker",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/worker/edit-worker": {
+            "post": {
+                "tags": [
+                    "Edit Worker"
+                ],
+                "summary": "Edit Worker",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/worker/update-worker": {
+            "post": {
+                "summary": "Update Worker Designation",
+                "operationId": "Update Worker",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "designation_id": {
+                                        "type": "number"
+                                    },
+                                    "pf_no": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/worker/deleteWorker": {
+            "post": {
+                "summary": "Delete Worker",
+                "operationId": "Delete Worker",
+                "tags": [
+                    "Worker Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/deleteCircle": {
+            "post": {
+                "summary": "Delete Circle",
+                "operationId": "Delete Circle",
+                "tags": [
+                    "Circle Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/deleteZone": {
+            "post": {
+                "summary": "Delete Zone",
+                "operationId": "Delete Zone",
+                "tags": [
+                    "Zone Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/deleteDepartment": {
+            "post": {
+                "summary": "Delete Department",
+                "operationId": "Delete Department",
+                "tags": [
+                    "Department Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/addDesignation": {
+            "post": {
+                "summary": "Add Designation",
+                "operationId": "Add Designation",
+                "tags": [
+                    "Designation Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "department_id": {
+                                        "type": "number"
+                                    },
+                                    "salary": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/addDepartment": {
+            "post": {
+                "summary": "Add Department",
+                "operationId": "Add Department",
+                "tags": [
+                    "Department Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "org_id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        },
+        "/master/editDepartment": {
+            "post": {
+                "summary": "Edit Department",
+                "operationId": "Edit Department",
+                "tags": [
+                    "Department Operations"
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "id": {
+                                        "type": "number"
+                                    }
+                                  
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "successful operation"
+                    },
+                    "400": {
+                        "description": "Invalid status value"
+                    }
+                }
+            }
+        }
+    }
+
+    }
