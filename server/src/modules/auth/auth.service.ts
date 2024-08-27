@@ -6,74 +6,82 @@ import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import config from "@app/config";
 import { User } from "@models/user/user.model";
 import { sign } from "jsonwebtoken";
-import bcrypt from "bcrypt";
+// import bcrypt from "bcrypt";
 
-const initialize = () => {
-    localStrategy();
-    jwtStrategy();
+export const initialize = () => {
+  localStrategy();
+  jwtStrategy();
+  passport.serializeUser(function (user, done) {
+    done(null, user);
+  });
+
+  // deserialize user object
+  passport.deserializeUser(function (user, done) {
+    done(null, user as any);
+  });
+  //   localStrategy();
+  //   jwtStrategy();
+  //   return passport.initialize();
 };
 
 const comparePassword = async (password: string, hashedPassword: string) => {
-    return await bcrypt.compare(password, hashedPassword);
+  return password == hashedPassword;
 };
 
 export const authServiceProvider = {
-    initialize,
-    authenticate: passport.authenticate,
-    generateToken: sign,
+  initialize,
+  authenticate: (...args: any) => {
+    return passport.authenticate(args);
+  },
+  generateToken: sign,
 };
 
 const jwtStrategy = () =>
-    passport.use(
-        new JwtStrategy(
-            {
-                jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-                secretOrKey: config.JWT_SECRET,
-            },
-            async (payload: { userId: any }, done: (...args: any) => any) => {
-                try {
-                    const user = await User.findOne({
-                        username: payload.userId,
-                    });
-                    if (!user) {
-                        return done(null, false);
-                    }
-                    return done(null, user);
-                } catch (error) {
-                    return done(error);
-                }
-            }
-        )
-    );
+  passport.use(
+    new JwtStrategy(
+      {
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: config.JWT_SECRET,
+      },
+      async (payload: { userId: any }, done: (...args: any) => any) => {
+        try {
+          const user = await User.findOne({
+            username: payload.userId,
+          });
+          if (!user) {
+            return done(null, false);
+          }
+          return done(null, user);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
 const localStrategy = () =>
-    passport.use(
-        new LocalStrategy(
-            { usernameField: "username" },
-            async (
-                username: string,
-                password: string,
-                done: (...args: any) => any
-            ) => {
-                try {
-                    const user = await User.findOne({ username });
-                    if (!user) {
-                        return done(null, false, {
-                            message: "Incorrect username or password.",
-                        });
-                    }
-                    const isMatch = await comparePassword(
-                        user.password,
-                        password
-                    );
-                    if (!isMatch) {
-                        return done(null, false, {
-                            message: "Incorrect username or password.",
-                        });
-                    }
-                    return done(null, user);
-                } catch (error) {
-                    return done(error);
-                }
-            }
-        )
-    );
+  passport.use(
+    new LocalStrategy(
+      { usernameField: "email", passwordField: "password" },
+      async (email: string, password: string, done: (...args: any) => any) => {
+        try {
+          console.log("🚀 ~ user:", email);
+          //   return done(null, true);
+          const user = await User.findOne({ username: email });
+          if (!user) {
+            return done(null, false, {
+              message: "Incorrect username or password.",
+            });
+          }
+          const isMatch = await comparePassword(user?.password, password);
+          if (!isMatch) {
+            return done(null, false, {
+              message: "Incorrect username or password.",
+            });
+          }
+          return done(null, user);
+        } catch (error) {
+          return done(error);
+        }
+      }
+    )
+  );
