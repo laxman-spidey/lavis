@@ -1,4 +1,6 @@
-const env: string = process.env.NODE_ENV ? process.env.NODE_ENV : "development";
+type Environment = "development" | "test" | "production";
+
+const env: Environment = process.env.NODE_ENV ? process.env.NODE_ENV as Environment : "development" as Environment;
 
 
 const original = Object.freeze({
@@ -26,17 +28,16 @@ const development: Config = {
 const test : Config = {
   ...original,  
 }
-type ConfigOut = {
-  "development": Config,
-  "test": Config,
-  "production": Config
 
+type ConfigOut = {
+  [key in Environment]: Config
 }
+
 const production: Config = {
   ...original
 }
 
-const config: { [key: string]: any } = {
+const config: ConfigOut = {
   "development": development,
   "test": test,
   "production": production

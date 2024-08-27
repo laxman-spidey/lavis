@@ -15,7 +15,11 @@
 		"vscode": {
 			// Add the IDs of extensions you want installed when the container is created.
 			"extensions": [
-				"mongodb.mongodb-vscode"
+				"mongodb.mongodb-vscode",
+				"googlecloudtools.cloudcode",
+				"ms-edgedevtools.vscode-edge-devtools",
+				"googlecloudtools.cloudcode",
+				"dbaeumer.vscode-eslint"
 			]
 		}
 	},
