@@ -233,13 +233,18 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
             const response: AxiosResponse<{
                 user: User;
                 access_token: string;
-            }> = await axios.post(url, data, { withCredentials: true });
-            const userData = response?.data?.user;
-            const accessToken = response?.data?.access_token;
+            }> = await axios.post(url, data, {  });
+            const {status, data: respData } = response.data as any;
+            if(status) {
+                const userData = respData?.user;
+                const accessToken = respData?.access_token;
+                handleSuccess(userData, accessToken);
+                return userData;
+            }
+            else {
+                handleFailure(response.data?.errorCode);
+            }
 
-            handleSuccess(userData, accessToken);
-
-            return userData;
         } catch (error) {
             const axiosError = error as AxiosError;
 
