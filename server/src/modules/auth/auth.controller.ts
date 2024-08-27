@@ -18,7 +18,11 @@ export const login = async (
     res: Response
 ) => {
     try {
-        const { username, password } = req.body;
+        console.log("/login", req.body);
+        const { username, password } = {
+            username: "username",
+            password: "password",
+        };
         authServiceProvider.authenticate(
             "local",
             { session: false },
@@ -42,6 +46,7 @@ export const AuthController = {
     initialize: () => {
         const router = getNewRouter();
         router.post("/login", login);
+        console.log("registered /login");
         return router;
     },
 };

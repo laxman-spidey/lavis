@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Request, Response, NextFunction } from "express";
-import { RESPONSE, ErrorResponse, ERROR_MESSAGES } from '@app/common';
+import { RESPONSE, ErrorResponse } from '@app/common';
 import { log } from '@app/common';
 import { Employee } from '@models/employee/employee.model';
 import { Login } from 'src/models/auth/login.model';

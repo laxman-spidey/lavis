@@ -40,16 +40,21 @@ export default class App {
     client: any;
     swaggerOptions?: Options;
     constructor(port: number) {
+        this.app.get("/sample", (req, res) => {
+            res.send("Hello World!");
+        });
+
+        this.config();
         this.port = port;
         connectMongoose();
         authServiceProvider.initialize();
-        // this.config();
     }
 
     private config = () => {
-        this.app.use(cors());
+        this.app.use(cors({ origin: "*" }));
         this.bodyParserConfig();
         this.initializeRoutes();
+        return;
         //var publicDir = path.join(__dirname, 'public')
         const staticfiles = express.static("public");
         this.app.use(staticfiles as RequestHandler);
@@ -115,7 +120,11 @@ export default class App {
     };
 
     private initializeRoutes = () => {
+        this.app.get("/sample", (req, res) => {
+            res.send("Hello World!");
+        });
         this.app.use("/auth", AuthController.initialize());
+        console.log("initialized routes");
         //   this.app.use('/master', this.masterController.router);
         //   this.app.use('/user', this.userController.router);
         //   this.app.use('/designation', this.userController.router);
@@ -152,6 +161,7 @@ export default class App {
 
     public listen = () => {
         this.app.listen(this.port, () => {
+            console.log(this.app._router);
             console.log(`App listening on the port ${this.port}`);
         });
     };
