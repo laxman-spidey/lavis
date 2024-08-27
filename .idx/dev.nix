@@ -13,17 +13,22 @@
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
       "rangav.vscode-thunder-client"
+      "dbaeumer.vscode-eslint"
+      "esbenp.prettier-vscode"
+      "googlecloudtools.cloudcode"
+      "mongodb.mongodb-vscode"
+      "redwan-hossain.skillavid-pure-black"
     ];
     workspace = {
       # Runs when a workspace is first created with this `dev.nix` file
       onCreate = {
-        npm-install = "npm ci --no-audit --prefer-offline --no-progress --timing";
+        server-install = "cd server && npm ci --no-audit --prefer-offline --no-progress --timing";
         client-install = "cd client && npm install";
       };
       # Runs when a workspace is (re)started
       onStart = {
-        run-server = "npm start";
-        run-client = "npm start";
+        run-server = "cd server && npm start";
+        run-client = "cd client && npm start";
       };
     };
   };
