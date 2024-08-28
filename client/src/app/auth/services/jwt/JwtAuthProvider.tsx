@@ -8,8 +8,10 @@ import React, {
 import axios, { AxiosError, AxiosResponse } from "axios";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { PartialDeep } from "type-fest";
-import { User } from "../../user";
+import { User } from "../../user";` `
 import config from "./jwtAuthConfig";
+import { useMessages } from '@fuse/hooks'
+
 
 export type JwtAuthStatus = "configuring" | "authenticated" | "unauthenticated";
 
@@ -73,6 +75,7 @@ export type JwtAuthProviderProps = {
 
 function JwtAuthProvider(props: JwtAuthProviderProps) {
     const [user, setUser] = useState<User>(null);
+    const {showError, showSuccess} = useMessages();
     const [isLoading, setIsLoading] = useState(true);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authStatus, setAuthStatus] = useState("configuring");
@@ -98,6 +101,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
      */
     const handleSignUpSuccess = useCallback(
         (userData: User, accessToken: string) => {
+            showSuccess('Signup Successful.');
             setSession(accessToken);
 
             setIsAuthenticated(true);
@@ -138,6 +142,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
         resetSession();
         setIsAuthenticated(false);
         setUser(null);
+        showError(_error);
     }, []);
 
     // Set session
@@ -242,7 +247,7 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
                 return userData;
             }
             else {
-                handleFailure(response.data?.errorCode);
+                handleFailure(response.data?.message);
             }
 
         } catch (error) {

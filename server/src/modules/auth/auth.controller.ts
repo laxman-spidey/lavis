@@ -1,13 +1,11 @@
-import { ERROR_RESPONSES, ErrorResponse, log } from "@app/common";
-import { Employee } from "@models/employee/employee.model";
-import { Request, Response, Router } from "express";
-import { Login } from "src/models/auth/login.model";
-import { authServiceProvider } from "./auth.service";
-import { logger } from "src/config/logger";
-import config from "@app/config";
+import { ERROR_RESPONSES, log, Krypto } from "@app/common";
 import { RESPONSE } from "@app/common/response";
-import { router, getNewRouter } from "src/common/router";
+import config from "@app/config";
+import { Request, Response } from "express";
 import passport from "passport";
+import { getNewRouter } from "src/common/router";
+import User from "src/models/user/user.model";
+import { authServiceProvider } from "./auth.service";
 
 type LoginRequestParams = {
   username: string;
@@ -29,17 +27,17 @@ export const login = async (
       (error: any, user: any, info: any) => {
         console.log("🚀 ~ user:", error, user, info);
         if (error) {
-          res.status(401).send(error);
+          return res.status(200).json(ERROR_RESPONSES.SOMETHING_WENT_WRONG);
         } else if (!user) {
-          res.status(401).send(info);
-        } else {
-          next();
+          console.log("sending error json");
+          return res.status(200).json(ERROR_RESPONSES.AUTH_INVALID_CREDS);
         }
 
         const token = authServiceProvider.generateToken(
           { username: email },
           config.JWT_SECRET
         );
+        //TODO: default userData has to be moved to the model
         const userData = {
           uid: user._id,
           role: "patient",
@@ -54,13 +52,64 @@ export const login = async (
             shortcuts: ["apps.calendar", "apps.mailbox", "apps.contacts"],
           },
         };
-        res.json(new RESPONSE({ access_token: token, user: userData }));
+        return res.json(new RESPONSE({ access_token: token, user: userData }));
       }
     )(req, res, next);
   } catch (error) {
     log.error(error.toString());
     console.log(error);
     res.status(500).json(ERROR_RESPONSES.AUTH_ERROR);
+  }
+};
+
+export const register = async (
+  req: Request<LoginRequestParams>,
+  res: Response,
+  next: any
+) => {
+  try {
+    console.log("/register", req.body);
+    const { displayName, email, password } = req.body;
+    const hashedPassword = await Krypto.encrypt(password);
+
+    const existingUser = await User.findOne({
+      username: email,
+    });
+    //TODO: Split the code into service and controller
+    if (existingUser) {
+      return res.status(200).json(ERROR_RESPONSES.REGISTER_USER_ALREADY_EXISTS);
+    }
+    const user = new User({
+      displayName: displayName,
+      username: email,
+      password: hashedPassword,
+      role: "patient",
+      data: {
+        displayName: displayName,
+        photoURL: "assets/images/avatars/brian-hughes.jpg",
+        email: email,
+        settings: {
+          layout: {},
+          theme: {},
+        },
+        shortcuts: ["apps.calendar", "apps.mailbox", "apps.contacts"],
+      },
+    });
+    const savedData = await user.save();
+    console.log(savedData);
+    const token = authServiceProvider.generateToken(
+      { username: email },
+      config.JWT_SECRET
+    );
+    const { password: _, ...userWithoutPassword } = user;
+    const userData = {
+      uid: user._id,
+      ...userWithoutPassword,
+    };
+    res.json(new RESPONSE({ access_token: token, user: userData }));
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(ERROR_RESPONSES.REGISTER_ERROR);
   }
 };
 // this.router.get("/employees", this.getEmployeeList);
@@ -70,7 +119,7 @@ export const AuthController = {
   initialize: () => {
     const router = getNewRouter();
     router.post("/login", login);
-    console.log("registered /login");
+    router.post("/register", register);
     return router;
   },
 };

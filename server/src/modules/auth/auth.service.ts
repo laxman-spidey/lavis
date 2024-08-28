@@ -4,6 +4,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { ExtractJwt, Strategy as JwtStrategy } from "passport-jwt";
 import config from "@app/config";
+import { Krypto } from "@app/common";
 import { User } from "@models/user/user.model";
 import { sign } from "jsonwebtoken";
 // import bcrypt from "bcrypt";
@@ -22,10 +23,6 @@ export const initialize = () => {
   //   localStrategy();
   //   jwtStrategy();
   //   return passport.initialize();
-};
-
-const comparePassword = async (password: string, hashedPassword: string) => {
-  return password == hashedPassword;
 };
 
 export const authServiceProvider = {
@@ -72,7 +69,10 @@ const localStrategy = () =>
               message: "Incorrect username or password.",
             });
           }
-          const isMatch = await comparePassword(user?.password, password);
+          const isMatch = await Krypto.comparePassword(
+            password,
+            user?.password
+          );
           if (!isMatch) {
             return done(null, false, {
               message: "Incorrect username or password.",
