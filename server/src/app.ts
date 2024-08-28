@@ -55,7 +55,7 @@ export default class App {
   private config = () => {
     this.app.use(cors());
     this.bodyParserConfig();
-    initialize();
+    authServiceProvider.initialize();
 
     this.app.use(passport.initialize());
     // this.app.use(passport.session());

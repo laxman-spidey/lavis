@@ -22,11 +22,14 @@ const userSchema = new Schema({
   },
   password: {
     type: Schema.Types.String,
-    // required:'Password is required'
+    required: "Password is required",
   },
   role: {
     type: String,
     enum: ["patient", "admin", "doctor"],
+  },
+  data: {
+    type: Schema.Types.Mixed,
   },
   lastLoggedIn: {
     type: Date,

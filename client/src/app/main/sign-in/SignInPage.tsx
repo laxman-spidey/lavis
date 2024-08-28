@@ -174,12 +174,13 @@ function SignInPage() {
                 <div className="relative z-10 w-full max-w-2xl">
                     <div className="text-7xl font-bold leading-none text-gray-100">
                         <div>Welcome to</div>
-                        <div>our community</div>
+                        <div>Lavis Portal</div>
                     </div>
                     <div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
-                        Fuse helps developers to build organized and well coded
-                        dashboards full of beautiful and rich modules. Join us
-                        and start building your application today.
+                        <p>
+                            This is a doctor appointment portal where you can
+                            schedule appointments with doctors, and Communicate with them instantly.
+                        </p>
                     </div>
                     <div className="mt-32 flex items-center">
                         <AvatarGroup
