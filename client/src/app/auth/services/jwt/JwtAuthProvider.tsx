@@ -8,7 +8,7 @@ import React, {
 import axios, { AxiosError, AxiosResponse } from "axios";
 import jwtDecode, { JwtPayload } from "jwt-decode";
 import { PartialDeep } from "type-fest";
-import { User } from "../../user";
+import { User } from "../../user";` `
 import config from "./jwtAuthConfig";
 import { useMessages } from '@fuse/hooks'
 
