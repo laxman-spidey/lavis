@@ -115,11 +115,23 @@ export const register = async (
 // this.router.get("/employees", this.getEmployeeList);
 // this.router.post("/login", this.login);
 
+const getUser = async (req: Request, res: Response) => {
+  try {
+    // json;
+    // const existingUser = await User.findOne({
+    //   username: email,
+    // });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const AuthController = {
   initialize: () => {
     const router = getNewRouter();
     router.post("/login", login);
     router.post("/register", register);
+    router.get("/user", getUser);
     return router;
   },
 };

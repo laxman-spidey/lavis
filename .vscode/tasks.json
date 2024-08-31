@@ -1,23 +1,31 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "type": "npm",
-            "script": "start",
-            "path": "client",
-            "group": "build",
-            "problemMatcher": [],
-            "label": "npm: start - client",
-            "detail": "NODE_OPTIONS=--max-old-space-size=4096 tsc && vite build"
-        },
-        {
-            "type": "npm",
-            "script": "start",
-            "path": "server",
-            "group": "build",
-            "problemMatcher": [],
-            "label": "npm: start - server",
-            "detail": "cross-env NODE_OPTIONS='--max-http-header-size=100000' npm run dev"
-        }
-    ]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "npm",
+      "script": "start",
+      "path": "client",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: start - client",
+      "detail": "NODE_OPTIONS=--max-old-space-size=4096 tsc && vite build"
+    },
+    {
+      "type": "npm",
+      "script": "start",
+      "path": "server",
+      "group": "build",
+      "problemMatcher": [],
+      "label": "npm: start - server",
+      "detail": "cross-env NODE_OPTIONS='--max-http-header-size=100000' npm run dev"
+    },
+    {
+      "type": "npm",
+      "script": "dev",
+      "path": "client",
+      "problemMatcher": [],
+      "label": "npm: dev - client",
+      "detail": "vite"
+    }
+  ]
 }
