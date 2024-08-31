@@ -13,6 +13,10 @@ export const useMessages = () => {
 };
 
 const displayMessage = (dispatch, variant, message) => {
+  if (typeof message == "object") {
+    message = "something went wrong.";
+    console.error(message);
+  }
   dispatch(
     showMessage({
       message: message, //text or html

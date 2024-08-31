@@ -11,6 +11,7 @@ import { PartialDeep } from "type-fest";
 import { User } from "../../user";` `
 import config from "./jwtAuthConfig";
 import { useMessages } from '@fuse/hooks'
+import { CustomResponse } from "../..";
 
 
 export type JwtAuthStatus = "configuring" | "authenticated" | "unauthenticated";
@@ -183,26 +184,23 @@ function JwtAuthProvider(props: JwtAuthProviderProps) {
     useEffect(() => {
         const attemptAutoLogin = async () => {
             const accessToken = getAccessToken();
-
             if (isTokenValid(accessToken)) {
                 try {
                     setIsLoading(true);
 
-                    const response: AxiosResponse<User> = await axios.get(
+                    const response: AxiosResponse<CustomResponse<User>> = await axios.get(
                         config.getUserUrl,
                         {
                             headers: { Authorization: `Bearer ${accessToken}` },
                         }
                     );
 
-                    const userData = response?.data;
-
+                    const userData = response?.data.data;
                     handleSignInSuccess(userData, accessToken);
 
                     return true;
                 } catch (error) {
                     const axiosError = error as AxiosError;
-
                     handleSignInFailure(axiosError);
                     return false;
                 }

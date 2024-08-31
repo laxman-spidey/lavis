@@ -4,6 +4,7 @@ import { FuseRouteItemType } from '@fuse/utils/FuseUtils';
 import en from './i18n/en';
 import tr from './i18n/tr';
 import ar from './i18n/ar';
+import { authRoles } from 'src/app/auth';
 
 i18next.addResourceBundle('en', 'examplePage', en);
 i18next.addResourceBundle('tr', 'examplePage', tr);
@@ -17,7 +18,7 @@ const Example = lazy(() => import('./Example'));
 const ExampleRoute: FuseRouteItemType = {
 	path: 'example',
 	element: <Example />,
-	auth:["patient"]
+	auth: authRoles.patient
 };
 
 export default ExampleRoute;

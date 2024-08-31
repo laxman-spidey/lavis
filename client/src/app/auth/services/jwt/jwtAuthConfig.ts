@@ -2,16 +2,15 @@ import { JwtAuthConfig } from "./JwtAuthProvider";
 
 // const HOST =
 //     "https://3000-idx-patient-portal-1723138675647.cluster-3g4scxt2njdd6uovkqyfcabgo6.cloudworkstations.dev/";
-const HOST = "http://localhost:3002/";
 const jwtAuthConfig: JwtAuthConfig = {
   tokenStorageKey: "jwt_access_token",
-  signInUrl: HOST + "auth/login",
-  signUpUrl: HOST + "auth/register",
+  signInUrl: "auth/login",
+  signUpUrl: "auth/register",
   // signInUrl: "mock-api/auth/sign-in",
   // signUpUrl: "mock-api/signup",
   // signOutUrl: "mock-api/auth/logout",
   tokenRefreshUrl: "mock-api/auth/refresh",
-  getUserUrl: "mock-api/auth/user",
+  getUserUrl: "auth/user",
   updateUserUrl: "mock-api/auth/user",
   updateTokenFromHeader: true,
 };

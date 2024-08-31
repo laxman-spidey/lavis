@@ -2,35 +2,26 @@
   "compilerOptions": {
     "target": "es6",
     "module": "commonjs",
-    "outDir": "./dist",
+    // "outDir": "./dist",
     "strict": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "./src/*"
-      ],
-      "@app/*": [
-        "./src/*"
-      ],
-      "@models/*": [
-        "./src/models/*"
-      ],
-      "@modules/*": [
-        "./src/modules/*"
-      ],
-      "*": [
-        "./*"
-      ]
+      "src/*": ["./src/*"],
+      "@app/*": ["./src/*"],
+      "@models/*": ["./src/models/*"],
+      "@modules/*": ["./src/modules/*"],
+      "*": ["./*"]
     },
+    // "sourceMap": true,
+    "inlineSourceMap": true,
     "esModuleInterop": true,
     "plugins": [
       {
-          "transform": "typescript-transform-paths",
-          "afterDeclarations": true,
-          "useRootDirs" : true 
+        "transform": "typescript-transform-paths",
+        "afterDeclarations": true,
+        "useRootDirs": true
       }
-    ],
-
+    ]
   }
 }

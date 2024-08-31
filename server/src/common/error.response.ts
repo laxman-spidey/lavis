@@ -15,6 +15,7 @@ const ERROR_MESSAGES = {
   SOMETHING_WENT_WRONG: "Something went wrong! please try again after sometime",
   AUTH_ERROR: "Authentication Failed",
   AUTH_INVALID_CREDS: "Invalid Crendentials",
+  AUTH_USER_NOT_FOUND: "User not found",
   REGISTER_ERROR: "Failed to Register account, please try again",
   REGISTER_USER_ALREADY_EXISTS:
     "User already exists, please login from login page",

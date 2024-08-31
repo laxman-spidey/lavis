@@ -13,12 +13,17 @@ import { useSelector } from 'react-redux';
 import { useMemo } from 'react';
 import AuthenticationProvider from './auth/AuthenticationProvider';
 import withAppProviders from './withAppProviders';
+import axios from 'axios';
 
 // import axios from 'axios';
 /**
  * Axios HTTP Request defaults
  */
-// axios.defaults.baseURL = "";
+
+const HOST = "http://localhost:3002/";
+
+axios.defaults.baseURL = HOST;
+// axios.defaults.headers.common['Authorization'] = AUTH_TOKEN;
 // axios.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 // axios.defaults.headers.common['Content-Type'] = 'application/x-www-form-urlencoded';
 

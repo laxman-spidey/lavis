@@ -21,6 +21,15 @@ const navigationConfig: FuseNavItemType[] = [
     url: "example",
     auth: ["patient"],
   },
+  {
+    id: "appointments-component",
+    title: "Appointments",
+    translate: "APPOINTMENTS",
+    type: "item",
+    icon: "heroicons-outline:calendar",
+    url: "appointments",
+    auth: ["patient"],
+  },
 ];
 
 export default navigationConfig;
