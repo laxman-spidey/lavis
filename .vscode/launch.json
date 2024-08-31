@@ -13,7 +13,7 @@
     },
     {
       "name": "Attach to server",
-      "port": 3000,
+      "port": 9229,
       "request": "attach",
       "skipFiles": ["<node_internals>/**"],
       "type": "node"
@@ -22,8 +22,9 @@
       "command": "npm start",
       "name": "Run npm start",
       "request": "launch",
-      "type": "node-terminal",
-      "cwd": "${workspaceFolder}/server"
+      "cwd": "${workspaceFolder}/server",
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"]
     },
     {
       "type": "node",
@@ -32,6 +33,17 @@
       "skipFiles": ["<node_internals>/**"],
       "program": "${file}",
       "outFiles": ["${workspaceFolder}/**/*.js"]
+    },
+    {
+      "name": "Debug (Attach)",
+      "port": 9229,
+      "request": "attach",
+      "autoAttachChildProcesses": true,
+      "restart": true,
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true,
+      "skipFiles": ["<node_internals>/**"],
+      "type": "node"
     }
   ]
 }

@@ -13,6 +13,7 @@ import { MasterController } from "./modules/masters/master.controller";
 import { connect } from "mongoose";
 import config from "./config";
 import { AuthController, authServiceProvider, initialize } from "@modules/auth";
+import { AppointmentsController } from "@modules/appointments";
 import passport from "passport";
 var fileUpload = require("express-fileupload");
 import { Strategy as LocalStrategy } from "passport-local";
@@ -160,6 +161,11 @@ export default class App {
       res.send("Hello World!");
     });
     this.app.use("/auth", AuthController.initialize());
+    this.app.use(
+      "/appointment",
+      // passport.authenticate("jwt", { session: false }),
+      AppointmentsController.initialize()
+    );
     console.log("initialized routes");
     //   this.app.use('/master', this.masterController.router);
     //   this.app.use('/user', this.userController.router);
@@ -197,7 +203,7 @@ export default class App {
 
   public listen = () => {
     this.app.listen(this.port, () => {
-      console.log(this.app._router);
+      // console.log(this.app._router);
       console.log(`App listening on the port ${this.port}`);
     });
   };

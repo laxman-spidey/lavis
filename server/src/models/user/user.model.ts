@@ -1,11 +1,12 @@
 import { Schema, model } from "mongoose";
 
-interface IUser {
+export type Role = "patient" | "admin" | "doctor";
+export interface IUser {
   firstname: string;
   lastname: string;
   username: string;
   password: string;
-  role: string;
+  role: Role;
   lastLoggedIn: Date;
   session: {
     token: string;

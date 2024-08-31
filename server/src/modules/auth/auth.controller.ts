@@ -3,9 +3,12 @@ import { RESPONSE } from "@app/common/response";
 import config from "@app/config";
 import { Request, Response } from "express";
 import passport from "passport";
+
 import { getNewRouter } from "src/common/router";
 import User from "src/models/user/user.model";
+import { ExtractJwt } from "passport-jwt";
 import { authServiceProvider } from "./auth.service";
+import { UserService } from "../user/user.service";
 
 type LoginRequestParams = {
   username: string;
@@ -18,46 +21,33 @@ export const login = async (
   next: any
 ) => {
   try {
-    console.log("/login", req.body);
     const { email, password } = req.body;
     // console.log(passport);
     passport.authenticate(
       "local",
       { session: false },
       (error: any, user: any, info: any) => {
-        console.log("🚀 ~ user:", error, user, info);
         if (error) {
           return res.status(200).json(ERROR_RESPONSES.SOMETHING_WENT_WRONG);
         } else if (!user) {
-          console.log("sending error json");
           return res.status(200).json(ERROR_RESPONSES.AUTH_INVALID_CREDS);
         }
+        const date = new Date();
+        const iat = Math.floor(date.getTime() / 1000);
+        const exp = Math.floor(date.setDate(date.getDate() + 7) / 1000);
 
         const token = authServiceProvider.generateToken(
-          { username: email },
+          { username: email, iat, exp },
           config.JWT_SECRET
         );
         //TODO: default userData has to be moved to the model
-        const userData = {
-          uid: user._id,
-          role: "patient",
-          data: {
-            displayName: "patient",
-            photoURL: "assets/images/avatars/brian-hughes.jpg",
-            email: user.username,
-            settings: {
-              layout: {},
-              theme: {},
-            },
-            shortcuts: ["apps.calendar", "apps.mailbox", "apps.contacts"],
-          },
-        };
-        return res.json(new RESPONSE({ access_token: token, user: userData }));
+        // const userData = await UserService.getUser({ username: email });
+        return res.json(new RESPONSE({ access_token: token, user }));
       }
     )(req, res, next);
   } catch (error) {
-    log.error(error.toString());
-    console.log(error);
+    log.error((error as any).toString());
+    console.error(error);
     res.status(500).json(ERROR_RESPONSES.AUTH_ERROR);
   }
 };
@@ -68,7 +58,6 @@ export const register = async (
   next: any
 ) => {
   try {
-    console.log("/register", req.body);
     const { displayName, email, password } = req.body;
     const hashedPassword = await Krypto.encrypt(password);
 
@@ -117,11 +106,13 @@ export const register = async (
 
 const getUser = async (req: Request, res: Response) => {
   try {
-    // json;
-    // const existingUser = await User.findOne({
-    //   username: email,
-    // });
+    const { user } = req;
+    if (!user) {
+      return res.status(200).json(ERROR_RESPONSES.AUTH_USER_NOT_FOUND);
+    }
+    res.status(200).json(new RESPONSE(user));
   } catch (error) {
+    res.status(500).json(ERROR_RESPONSES.AUTH_ERROR);
     console.log(error);
   }
 };
@@ -131,7 +122,11 @@ export const AuthController = {
     const router = getNewRouter();
     router.post("/login", login);
     router.post("/register", register);
-    router.get("/user", getUser);
+    router.get(
+      "/user",
+      passport.authenticate("jwt", { session: false }),
+      getUser
+    );
     return router;
   },
 };
