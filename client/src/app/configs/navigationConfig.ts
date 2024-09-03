@@ -3,6 +3,7 @@ import { FuseNavItemType } from "@fuse/core/FuseNavigation/types/FuseNavItemType
 import ar from "./navigation-i18n/ar";
 import en from "./navigation-i18n/en";
 import tr from "./navigation-i18n/tr";
+import { authRoles } from "src/app/auth";
 
 i18next.addResourceBundle("en", "navigation", en);
 i18next.addResourceBundle("tr", "navigation", tr);
@@ -19,7 +20,7 @@ const navigationConfig: FuseNavItemType[] = [
     type: "item",
     icon: "heroicons-outline:star",
     url: "example",
-    auth: ["patient"],
+    auth: authRoles.patient,
   },
   {
     id: "appointments-component",
@@ -28,7 +29,7 @@ const navigationConfig: FuseNavItemType[] = [
     type: "item",
     icon: "heroicons-outline:calendar",
     url: "appointments",
-    auth: ["patient"],
+    auth: authRoles.patient,
   },
 ];
 

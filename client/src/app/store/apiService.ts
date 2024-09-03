@@ -5,9 +5,9 @@ const axiosBaseQuery =
   (): BaseQueryFn<AxiosRequestConfig<unknown>, unknown, AxiosError> =>
   async ({ url, method, data, params }) => {
     try {
-      Axios.defaults.baseURL = "/api";
+      Axios.defaults.baseURL = HOST;
       const result = await Axios({
-        url: HOST + url,
+        url: url,
         method,
         data,
         // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
