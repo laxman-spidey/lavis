@@ -2,7 +2,7 @@ import { createSelector } from "@reduxjs/toolkit";
 import { apiService as api } from "app/store/apiService";
 import FuseUtils from "@fuse/utils";
 import { selectSearchText } from "./contactsAppSlice";
-import { User } from "@app/auth/user";
+import { User } from "src/app/auth/user";
 export const addTagTypes = [
   "contacts_item",
   "contacts",
@@ -254,7 +254,9 @@ export const selectGroupedFilteredContacts = (contacts: Contact[]) =>
     }
 
     const sortedContacts = [...contacts]?.sort((a, b) =>
-      a?.displayName?.localeCompare(b.name, "es", { sensitivity: "base" })
+      a?.data.displayName?.localeCompare(b.data.displayName, "es", {
+        sensitivity: "base",
+      })
     );
 
     const groupedObject: {
