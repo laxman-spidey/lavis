@@ -13,17 +13,17 @@ export interface IUser {
   };
   socket: string;
 }
-const userSchema = new Schema({
+const userSchema = new Schema<IUser>({
   firstname: Schema.Types.String,
   lastname: Schema.Types.String,
   username: {
     type: Schema.Types.String,
-    required: "Email is required",
+    // required: "Email is required",
     index: true,
   },
   password: {
     type: Schema.Types.String,
-    required: "Password is required",
+    // required: "Password is required",
   },
   role: {
     type: String,
